@@ -15,9 +15,106 @@
     </style>
 </head>
 <body>
-    <div class="dab-machine">
-        <!-- L'écran principal -->
-        <div class="ecran">
+   .dab-machine {
+    width: 800px;
+    margin: 20px auto;
+    background: #2c3e50;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.ecran {
+    background: #1a1a1a;
+    color: #00ff00;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.boutons-lateraux {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.btn-lateral {
+    padding: 15px 25px;
+    background: #34495e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.clavier {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.touches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.touch-num, .touch-special {
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.touch-num {
+    background: #3498db;
+    color: white;
+}
+
+.touch-special {
+    background: #e74c3c;
+    color: white;
+}
+
+.affichage-pin {
+    background: #000;
+    color: #00ff00;
+    padding: 15px;
+    margin: 20px auto;
+    width: 200px;
+    font-size: 24px;
+    font-family: monospace;
+    border-radius: 5px;
+}
+
+.fente-carte, .fente-billets {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#btn-inserer-carte {
+    padding: 15px 30px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#sortie-billets {
+    background: #f39c12;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
             <div id="affichage">
                 <h2>🏧 Bienvenue</h2>
                 <p>Veuillez insérer votre carte</p>
@@ -39,12 +136,29 @@
         </div>
         
         <!-- Le clavier numérique -->
-        <div class="clavier">
-            <h3>Tapez votre code</h3>
-            <div class="touches">
-                <!-- On va créer les boutons 0-9 -->
-            </div>
-        </div>
+<div class="clavier">
+    <h3>Tapez votre code</h3>
+    <div class="affichage-pin">
+        <span id="pin-display">****</span>
+    </div>
+    <div class="touches">
+        <button class="touch-num" onclick="tapperChiffre('1')">1</button>
+        <button class="touch-num" onclick="tapperChiffre('2')">2</button>
+        <button class="touch-num" onclick="tapperChiffre('3')">3</button>
+        
+        <button class="touch-num" onclick="tapperChiffre('4')">4</button>
+        <button class="touch-num" onclick="tapperChiffre('5')">5</button>
+        <button class="touch-num" onclick="tapperChiffre('6')">6</button>
+        
+        <button class="touch-num" onclick="tapperChiffre('7')">7</button>
+        <button class="touch-num" onclick="tapperChiffre('8')">8</button>
+        <button class="touch-num" onclick="tapperChiffre('9')">9</button>
+        
+        <button class="touch-special" onclick="annuler()">❌ Annuler</button>
+        <button class="touch-num" onclick="tapperChiffre('0')">0</button>
+        <button class="touch-special" onclick="valider()">✅ Valider</button>
+    </div>
+</div>
         
         <!-- Fente pour carte -->
         <div class="fente-carte">
