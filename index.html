@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAB Simulator</title>
+    
+    <style>
+        /* On mettra le CSS ici après */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dab-machine">
+        <!-- L'écran principal -->
+        <div class="ecran">
+            <div id="affichage">
+                <h2>🏧 Bienvenue</h2>
+                <p>Veuillez insérer votre carte</p>
+            </div>
+        </div>
+        
+        <!-- Les boutons sur les côtés -->
+        <div class="boutons-lateraux">
+            <div class="boutons-gauche">
+                <button class="btn-lateral">F1</button>
+                <button class="btn-lateral">F2</button>
+                <button class="btn-lateral">F3</button>
+            </div>
+            <div class="boutons-droite">
+                <button class="btn-lateral">F4</button>
+                <button class="btn-lateral">F5</button>
+                <button class="btn-lateral">F6</button>
+            </div>
+        </div>
+        
+        <!-- Le clavier numérique -->
+        <div class="clavier">
+            <h3>Tapez votre code</h3>
+            <div class="touches">
+                <!-- On va créer les boutons 0-9 -->
+            </div>
+        </div>
+        
+        <!-- Fente pour carte -->
+        <div class="fente-carte">
+            <button id="btn-inserer-carte">📱 Insérer votre carte</button>
+        </div>
+        
+        <!-- Fente pour billets -->
+        <div class="fente-billets">
+            <div id="sortie-billets">💵 Vos billets sortiront ici</div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript viendra ici
+        console.log("DAB initialisé !");
+    </script>
+</body>
+</html>
