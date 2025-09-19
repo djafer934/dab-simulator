@@ -107,7 +107,7 @@
 </div>
 
 <script>
-  // --- Simulation utilisateurs ---
+  // --- Utilisateurs simulés avec localStorage ---
   let users = JSON.parse(localStorage.getItem("users")) || {
     "1234567890123456": { pin: "1234", name: "M. Dupont", balance: 2500, history: [], lastLogin: null, locked: false, attempts: 0 }
   };
@@ -115,13 +115,12 @@
   let currentUser = null;
   let currentCard = null;
 
-  // --- Navigation ---
+  // --- Navigation entre écrans ---
   function showScreen(id) {
     document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
     document.querySelectorAll(".error, .success").forEach(m => { m.classList.remove("show"); m.textContent = ""; });
   }
-
   function backToMenu() { showScreen("menuScreen"); }
 
   // --- Connexion ---
@@ -155,9 +154,7 @@
   }
 
   // --- Solde ---
-  function updateBalanceDisplay() {
-    document.getElementById("balanceAmount").textContent = currentUser.balance + " €";
-  }
+  function updateBalanceDisplay() { document.getElementById("balanceAmount").textContent = currentUser.balance + " €"; }
   function showBalance() { updateBalanceDisplay(); showScreen("balanceScreen"); }
 
   // --- Déconnexion ---
