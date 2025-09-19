@@ -96,6 +96,10 @@
   '1234567890123456': { pin: '6453', name: 'M. Dupont', balance: 2500, type: 'Banque' },
   '9876543210987654': { pin: '5628', name: 'Mme Martin', balance: 1750, type: 'Visa' }
 };
+  // Suivi des tentatives et cartes bloquées
+let loginAttempts = {};   // compte les tentatives pour chaque carte
+let blockedCards = {};    // stocke les cartes avalées
+  
   
   // Variables d'état
   let currentUser = null;
@@ -119,19 +123,28 @@
     const cardNumber = document.getElementById('cardNumber').value.trim();
     const pin = document.getElementById('pin').value.trim();
 
-    // Validation simple des champs
-    if (!cardNumber || !pin) {
-      showError('loginError', 'Veuillez remplir tous les champs');
-      return;
+    if (blockedCards[cardNumber]) {
+        showError('loginError', 'Carte avalée. Contactez le service de maintenance.');
+        return;
     }
-    if (cardNumber.length !== 16 || !/^\d{16}$/.test(cardNumber)) {
-      showError('loginError', 'Le numéro de carte doit contenir 16 chiffres');
-      return;
+
+    if (validCards[cardNumber] && validCards[cardNumber].pin === pin) {
+        loginAttempts[cardNumber] = 0; // reset compteur
+        currentUser = validCards[cardNumber];
+        document.getElementById('userName').textContent = currentUser.name;
+        updateBalanceDisplay();
+        showScreen('menuScreen');
+    } else {
+        loginAttempts[cardNumber] = (loginAttempts[cardNumber] || 0) + 1;
+        if (loginAttempts[cardNumber] >= 3) {
+            blockedCards[cardNumber] = true; // carte avalée
+            showError('loginError', 'Carte avalée après 3 tentatives. Contactez le service de maintenance.');
+        } else {
+            showError('loginError', `Numéro de carte ou PIN incorrect (${loginAttempts[cardNumber]}/3)`);
+        }
     }
-    if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
-      showError('loginError', 'Le PIN doit contenir 4 chiffres');
-      return;
-    }
+}
+
 
     // Vérification des identifiants
     if (validCards[cardNumber] && validCards[cardNumber].pin === pin) {
