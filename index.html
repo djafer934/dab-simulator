@@ -144,18 +144,7 @@ let blockedCards = {};    // stocke les cartes avalées
         }
     }
 }
-
-
-    // Vérification des identifiants
-    if (validCards[cardNumber] && validCards[cardNumber].pin === pin) {
-      currentUser = validCards[cardNumber];
-      document.getElementById('userName').textContent = currentUser.name;
-      updateBalanceDisplay();
-      showScreen('menuScreen');
-    } else {
-      showError('loginError', 'Numéro de carte ou PIN incorrect');
-    }
-  }
+  
 
   // === Mise à jour du solde affiché ===
   function updateBalanceDisplay() {
