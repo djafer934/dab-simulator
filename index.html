@@ -140,7 +140,7 @@ let blockedCards = {};    // stocke les cartes avalées
             blockedCards[cardNumber] = true; // carte avalée
             showError('loginError', 'Carte avalée après 3 tentatives. Contactez le service de maintenance.');
         } else {
-            showError('loginError', `Numéro de carte ou PIN incorrect (${loginAttempts[cardNumber]}/3)`);
+            showError('loginError', `Numéro de carte ou PIN incorrect (${loginAttempts[cardNumber]} / 3)`);
         }
     }
 }
