@@ -44,8 +44,8 @@
         <input type="password" id="pin" maxlength="4" placeholder="1234" />
       </div>
       <div id="loginError" class="error"></div>
-      <button onclick="login()">Se connecter</button>
-    </div>
+<button onclick="login()">Se connecter</button>
+<button class="secondary" onclick="showOperatorLogin()" style="margin-top: 10px; font-size: 12px;">🔧 Mode Opérateur</button>
 
     <!-- ÉCRAN 2 : Menu principal -->
     <div id="menuScreen" class="screen">
@@ -90,6 +90,68 @@
     </div>
   </div>
 
+    <!-- ÉCRAN 6 : Connexion Opérateur -->
+<div id="operatorLoginScreen" class="screen">
+  <h2>🔧 Connexion Opérateur</h2>
+  <div class="form-group">
+    <label for="operatorCode">Code Opérateur :</label>
+    <input type="password" id="operatorCode" maxlength="6" placeholder="123456" />
+  </div>
+  <div id="operatorLoginError" class="error"></div>
+  <button onclick="operatorLogin()">Se connecter</button>
+  <button class="secondary" onclick="showScreen('loginScreen')">⬅ Retour</button>
+</div>
+
+    <!-- ÉCRAN 7 : Menu Opérateur -->
+<div id="operatorMenuScreen" class="screen">
+  <h2>🔧 Menu Opérateur</h2>
+  <p>Bonjour <span id="operatorName">Opérateur</span></p>
+  
+  <button class="menu-item" onclick="showBlockedCards()"><span class="menu-icon">🔒</span>Cartes avalées</button>
+  <button class="menu-item" onclick="showCollectDeposits()"><span class="menu-icon">💰</span>Collecter dépôts</button>
+  <button class="menu-item" onclick="showRefillATM()"><span class="menu-icon">🏧</span>Recharger DAB</button>
+  <button class="menu-item" onclick="showStatistics()"><span class="menu-icon">📊</span>Statistiques</button>
+  <button class="secondary" onclick="operatorLogout()">🚪 Déconnexion</button>
+</div>
+
+    <!-- ÉCRAN 8 : Cartes avalées -->
+<div id="blockedCardsScreen" class="screen">
+  <h2>🔒 Cartes avalées</h2>
+  <div id="blockedCardsList"></div>
+  <button onclick="releaseAllCards()">🔓 Libérer toutes les cartes</button>
+  <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
+</div>
+
+<!-- ÉCRAN 9 : Collecter dépôts -->
+<div id="collectScreen" class="screen">
+  <h2>💰 Collecter dépôts</h2>
+  <div class="balance">
+    <h3>Total des dépôts : <span id="totalDeposits">0 €</span></h3>
+    <p>Argent à collecter dans la machine</p>
+  </div>
+  <button onclick="collectDeposits()">✅ Marquer comme collecté</button>
+  <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
+</div>
+
+<!-- ÉCRAN 10 : Recharger DAB -->
+<div id="refillScreen" class="screen">
+  <h2>🏧 Recharger DAB</h2>
+  <div class="form-group">
+    <label for="refillAmount">Montant à ajouter (en €) :</label>
+    <input type="number" id="refillAmount" placeholder="Ex: 5000" step="100">
+  </div>
+  <button onclick="refillATM()">💰 Recharger</button>
+  <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
+  <p id="refillMessage" class="success"></p>
+</div>
+
+</div>
+</div>
+
+    
+</div>
+</div>
+
 <script>
   // === Données utilisateurs simulées ===
   const validCards = {
@@ -102,7 +164,12 @@ let blockedCards = {};    // stocke les cartes avalées
   
   
   // Variables d'état
-  let currentUser = null;
+  let currentOperator = null;  // pour l'opérateur connecté
+const operatorCode = '123456';  // code opérateur (tu peux le changer)
+
+  // Variables pour les statistiques opérateur
+let totalDepositsToday = 0;  // total des dépôts de la journée
+let dailyTransactions = 0;   // nombre de transactions
 
   // === Navigation entre écrans ===
   function showScreen(id) {
@@ -213,6 +280,7 @@ let blockedCards = {};    // stocke les cartes avalées
     }
 
     currentUser.balance -= amount;
+    dailyTransactions += 1;  // compter les retraits aussi
     updateBalanceDisplay();
     showSuccess('withdrawSuccess', `Retrait de ${amount}€ effectué avec succès`);
     document.getElementById('withdrawAmount').value = '';
@@ -237,6 +305,9 @@ let blockedCards = {};    // stocke les cartes avalées
 
     // On ajoute le montant au solde
     currentUser.balance += amount;
+    currentUser.balance += amount;
+    totalDepositsToday += amount;  // ajouter aux statistiques
+    dailyTransactions += 1;
     updateBalanceDisplay();
     showSuccess('depositSuccess', `Dépôt de ${amount}€ effectué avec succès`);
     document.getElementById('depositAmount').value = '';
@@ -254,6 +325,81 @@ let blockedCards = {};    // stocke les cartes avalées
     el.textContent = message;
     el.classList.add('show');
   }
+
+  // === Fonctions Opérateur ===
+function showOperatorLogin() {
+  document.getElementById('operatorCode').value = '';
+  hideMessages();
+  showScreen('operatorLoginScreen');
+}
+
+function operatorLogin() {
+  const code = document.getElementById('operatorCode').value.trim();
+  
+  if (code === operatorCode) {
+    currentOperator = { name: 'Opérateur', code: code };
+    showScreen('operatorMenuScreen');
+  } else {
+    showError('operatorLoginError', 'Code opérateur incorrect');
+  }
+}
+
+  // === Autres fonctions opérateur ===
+function showBlockedCards() {
+  updateBlockedCardsList();
+  showScreen('blockedCardsScreen');
+}
+
+function showCollectDeposits() {
+  showScreen('collectScreen');
+}
+
+function showRefillATM() {
+  document.getElementById('refillAmount').value = '';
+  document.getElementById('refillMessage').textContent = '';
+  showScreen('refillScreen');
+}
+
+function showStatistics() {
+  alert('📊 Statistiques :\n- Cartes avalées : ' + Object.keys(blockedCards).length + '\n- Connexions aujourd\'hui : ' + Object.keys(loginAttempts).length);
+}
+
+function operatorLogout() {
+  currentOperator = null;
+  showScreen('loginScreen');
+}
+
+function updateBlockedCardsList() {
+  const list = document.getElementById('blockedCardsList');
+  const blocked = Object.keys(blockedCards);
+  
+  if (blocked.length === 0) {
+    list.innerHTML = '<p>✅ Aucune carte avalée</p>';
+  } else {
+    list.innerHTML = '<p>⚠️ Cartes avalées :</p><ul>' + 
+      blocked.map(card => '<li>' + card + '</li>').join('') + '</ul>';
+  }
+}
+
+function releaseAllCards() {
+  blockedCards = {};
+  updateBlockedCardsList();
+  alert('✅ Toutes les cartes ont été libérées !');
+}
+
+function collectDeposits() {
+  alert('💰 Dépôts collectés avec succès !');
+}
+
+function refillATM() {
+  const amount = parseInt(document.getElementById('refillAmount').value);
+  if (amount && amount > 0) {
+    document.getElementById('refillMessage').textContent = `✅ DAB rechargé avec ${amount}€`;
+  } else {
+    document.getElementById('refillMessage').textContent = '❌ Montant invalide';
+  }
+}
+
 
   // === Limitation des saisies pour carte et PIN ===
   document.addEventListener('DOMContentLoaded', () => {
