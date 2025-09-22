@@ -305,7 +305,6 @@ let dailyTransactions = 0;   // nombre de transactions
 
     // On ajoute le montant au solde
     currentUser.balance += amount;
-    currentUser.balance += amount;
     totalDepositsToday += amount;  // ajouter aux statistiques
     dailyTransactions += 1;
     updateBalanceDisplay();
@@ -351,6 +350,7 @@ function showBlockedCards() {
 }
 
 function showCollectDeposits() {
+  document.getElementById('totalDeposits').textContent = totalDepositsToday + ' €';
   showScreen('collectScreen');
 }
 
