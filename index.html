@@ -361,9 +361,12 @@ function showRefillATM() {
 }
 
 function showStatistics() {
-  alert('📊 Statistiques :\n- Cartes avalées : ' + Object.keys(blockedCards).length + '\n- Connexions aujourd\'hui : ' + Object.keys(loginAttempts).length);
+  alert('📊 Statistiques DAB :\n' +
+    '- Cartes avalées : ' + Object.keys(blockedCards).length + '\n' +
+    '- Dépôts du jour : ' + totalDepositsToday + '€\n' +
+    '- Transactions : ' + dailyTransactions + '\n' +
+    '- Tentatives de connexion : ' + Object.keys(loginAttempts).length);
 }
-
 function operatorLogout() {
   currentOperator = null;
   showScreen('loginScreen');
