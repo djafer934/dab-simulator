@@ -55,6 +55,9 @@
       <button class="menu-item" onclick="showBalance()"><span class="menu-icon">👁️</span>Voir mon solde</button>
       <button class="menu-item" onclick="showWithdraw()"><span class="menu-icon">💰</span>Retirer de l'argent</button>
       <button class="menu-item" onclick="showDeposit()"><span class="menu-icon">➕</span>Déposer de l'argent</button>
+      <button class="menu-item" onclick="showHistory()">
+  <span class="menu-icon">📋</span>Historique des opérations
+</button>
       <button class="secondary" onclick="logout()">Déconnexion</button>
     </div>
 
@@ -145,6 +148,15 @@
   <button onclick="refillATM()">💰 Recharger</button>
   <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
   <p id="refillMessage" class="success"></p>
+</div
+
+  <!-- ÉCRAN 11 : Historique des opérations -->
+<div id="historyScreen" class="screen">
+  <h2>📋 Historique des opérations</h2>
+  <div id="historyList" style="max-height:400px; overflow-y:auto;">
+    <!-- La liste sera générée dynamiquement par JavaScript -->
+  </div>
+  <button class="secondary" onclick="backToMenu()">Retour au menu</button>
 </div>
 
 </div>
@@ -167,6 +179,7 @@ let blockedCards = {};    // stocke les cartes avalées
   
   // Variables d'état
 let currentUser = null;        // ← AJOUTE cette ligne ICI
+let operationHistory = [];  // Stocke toutes les opérations du client connecté
 let currentOperator = null;    // pour l'opérateur connecté
 const operatorCode = '539757';  // code opérateur (tu peux le changer)
 
@@ -188,6 +201,77 @@ let dailyTransactions = 0;   // nombre de transactions
     });
   }
 
+  // === Fonction pour enregistrer une opération dans l'historique ===
+function addToHistory(type, amount) {
+  const now = new Date();  // On récupère la date et l'heure actuelles
+  
+  // On crée un objet avec les détails de l'opération
+  const operation = {
+    type: type,                                    // Ex: 'Dépôt'
+    amount: amount,                                // Ex: 50
+    date: now.toLocaleDateString('fr-FR'),        // Ex: '29/09/2025'
+    time: now.toLocaleTimeString('fr-FR', {       // Ex: '14:32:15'
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    })
+  };
+
+  // === Afficher l'écran historique ===
+function showHistory() {
+  const historyList = document.getElementById('historyList');
+  
+  // Si aucune opération n'a été effectuée
+  if (operationHistory.length === 0) {
+    historyList.innerHTML = '<p style="text-align:center; color:#999;">Aucune opération effectuée</p>';
+  } else {
+    // On crée une liste HTML avec toutes les opérations
+    let html = '<ul style="list-style:none; padding:0;">';
+    
+    operationHistory.forEach(op => {
+      // Choix de l'icône selon le type d'opération
+      let icon = '';
+      let color = '';
+      if (op.type === 'Dépôt') {
+        icon = '➕';
+        color = '#060'; // Vert
+      } else if (op.type === 'Retrait') {
+        icon = '💰';
+        color = '#c00'; // Rouge
+      } else {
+        icon = '👁️';
+        color = '#666'; // Gris
+      }
+      
+      // Création d'une ligne pour chaque opération
+      html += `
+        <li style="background:#f8f9fa; padding:15px; margin:10px 0; border-left:4px solid ${color}; border-radius:5px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:${color};">${icon} ${op.type}</strong>
+              <br>
+              <small style="color:#666;">${op.date} à ${op.time}</small>
+            </div>
+            <div style="font-size:1.2em; font-weight:bold; color:${color};">
+              ${op.amount > 0 ? op.amount + ' €' : '—'}
+            </div>
+          </div>
+        </li>
+      `;
+    });
+    
+    html += '</ul>';
+    historyList.innerHTML = html;
+  }
+  
+  showScreen('historyScreen');
+}
+  
+  // On ajoute cette opération au début du tableau (les plus récentes en premier)
+  operationHistory.unshift(operation);
+  
+  console.log('Opération ajoutée:', operation); // Pour vérifier dans la console du navigateur
+}
   // === Authentification ===
   function login() {
     const cardNumber = document.getElementById('cardNumber').value.trim();
@@ -223,6 +307,7 @@ let dailyTransactions = 0;   // nombre de transactions
 
   // === Fonction de déconnexion ===
   function logout() {
+    operationHistory = [];  // Vide l'historique quand on se déconnecte
     currentUser = null;
     document.getElementById('cardNumber').value = '';
     document.getElementById('pin').value = '';
@@ -234,6 +319,7 @@ let dailyTransactions = 0;   // nombre de transactions
   // === Afficher écran solde ===
   function showBalance() {
     updateBalanceDisplay();
+    addToHistory('Consultation', 0);  // Enregistre la consultation (montant = 0)
     showScreen('balanceScreen');
   }
 
@@ -283,6 +369,7 @@ let dailyTransactions = 0;   // nombre de transactions
     }
 
     currentUser.balance -= amount;
+    addToHistory('Retrait', amount);  // Enregistre le retrait dans l'historique
     dailyTransactions += 1;  // compter les retraits aussi
     updateBalanceDisplay();
     showSuccess('withdrawSuccess', `Retrait de ${amount}€ effectué avec succès`);
@@ -308,6 +395,7 @@ let dailyTransactions = 0;   // nombre de transactions
 
     // On ajoute le montant au solde
     currentUser.balance += amount;
+    addToHistory('Dépôt', amount);  // Enregistre le dépôt dans l'historique
     totalDepositsToday += amount;  // ajouter aux statistiques
     dailyTransactions += 1;
     updateBalanceDisplay();
