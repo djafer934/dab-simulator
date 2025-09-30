@@ -95,7 +95,16 @@
     </div>
   </div>
 
-    <!-- ÉCRAN 6 : Connexion Opérateur -->
+  <!-- ÉCRAN 6 : Historique des opérations -->
+<div id="historyScreen" class="screen">
+  <h2>📋 Historique des opérations</h2>
+  <div id="historyList" style="max-height:400px; overflow-y:auto;">
+    <!-- La liste sera générée dynamiquement par JavaScript -->
+  </div>
+  <button class="secondary" onclick="backToMenu()">Retour au menu</button>
+</div>
+
+    <!-- ÉCRAN 7 : Connexion Opérateur -->
 <div id="operatorLoginScreen" class="screen">
   <h2>🔧 Connexion Opérateur</h2>
   <div class="form-group">
@@ -107,7 +116,7 @@
   <button class="secondary" onclick="showScreen('loginScreen')">⬅ Retour</button>
 </div>
 
-    <!-- ÉCRAN 7 : Menu Opérateur -->
+    <!-- ÉCRAN 8 : Menu Opérateur -->
 <div id="operatorMenuScreen" class="screen">
   <h2>🔧 Menu Opérateur</h2>
   <p>Bonjour <span id="operatorName">Opérateur</span></p>
@@ -119,7 +128,7 @@
   <button class="secondary" onclick="operatorLogout()">🚪 Déconnexion</button>
 </div>
 
-    <!-- ÉCRAN 8 : Cartes avalées -->
+    <!-- ÉCRAN 9 : Cartes avalées -->
 <div id="blockedCardsScreen" class="screen">
   <h2>🔒 Cartes avalées</h2>
   <div id="blockedCardsList"></div>
@@ -127,7 +136,7 @@
   <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
 </div>
 
-<!-- ÉCRAN 9 : Collecter dépôts -->
+<!-- ÉCRAN 10 : Collecter dépôts -->
 <div id="collectScreen" class="screen">
   <h2>💰 Collecter dépôts</h2>
   <div class="balance">
@@ -138,7 +147,7 @@
   <button class="secondary" onclick="showScreen('operatorMenuScreen')">⬅ Retour</button>
 </div>
 
-<!-- ÉCRAN 10 : Recharger DAB -->
+<!-- ÉCRAN 11 : Recharger DAB -->
 <div id="refillScreen" class="screen">
   <h2>🏧 Recharger DAB</h2>
   <div class="form-group">
@@ -150,14 +159,6 @@
   <p id="refillMessage" class="success"></p>
 </div
 
-  <!-- ÉCRAN 11 : Historique des opérations -->
-<div id="historyScreen" class="screen">
-  <h2>📋 Historique des opérations</h2>
-  <div id="historyList" style="max-height:400px; overflow-y:auto;">
-    <!-- La liste sera générée dynamiquement par JavaScript -->
-  </div>
-  <button class="secondary" onclick="backToMenu()">Retour au menu</button>
-</div>
 
 </div>
 </div>
