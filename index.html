@@ -126,6 +126,7 @@
     align-items: center; 
     padding: 16px;
     font-weight: 600;
+    color: #1f2937;
   }
   .menu-item:hover { 
     border-color: #2563eb;
@@ -168,30 +169,34 @@
         <input type="text" id="cardNumber" maxlength="16" placeholder="1234567890123456">
       </div>
       <div class="form-group">
-        <label for="pin">Code PIN (4 chiffres)</label>
-        <input type="password" id="pin" maxlength="4" placeholder="****">
+        <label for="secret">Code secret (4 chiffres)</label>
+        <input type="password" id="secret" maxlength="4" placeholder="****">
       </div>
       <div id="loginError" class="error"></div>
-      <button onclick="app.login()">Se connecter</button>
-      <button class="secondary" onclick="app.showOperatorLogin()">🔧 Mode Opérateur</button>
+      <button onclick="login()">Se connecter</button>
+      <button class="secondary" onclick="showOperatorLogin()">🔧 Mode Opérateur</button>
     </div>
 
     <!-- ÉCRAN 2 : Menu Client -->
     <div id="menuScreen" class="screen">
       <h2>Bonjour <span id="userName">Client</span> !</h2>
-      <button class="menu-item" onclick="app.showBalance()">
-        <span class="menu-icon">👁️</span> Voir mon solde
+      <button class="menu-item" onclick="showBalance()">
+        <span class="menu-icon">👁️</span>
+        <span>Voir mon solde</span>
       </button>
-      <button class="menu-item" onclick="app.showWithdraw()">
-        <span class="menu-icon">💰</span> Retirer de l'argent
+      <button class="menu-item" onclick="showWithdraw()">
+        <span class="menu-icon">💰</span>
+        <span>Retirer de l'argent</span>
       </button>
-      <button class="menu-item" onclick="app.showDeposit()">
-        <span class="menu-icon">➕</span> Déposer de l'argent
+      <button class="menu-item" onclick="showDeposit()">
+        <span class="menu-icon">➕</span>
+        <span>Déposer de l'argent</span>
       </button>
-      <button class="menu-item" onclick="app.showHistory()">
-        <span class="menu-icon">📋</span> Historique des opérations
+      <button class="menu-item" onclick="showHistory()">
+        <span class="menu-icon">📋</span>
+        <span>Historique des opérations</span>
       </button>
-      <button class="secondary" onclick="app.logout()">Déconnexion</button>
+      <button class="secondary" onclick="logout()">Déconnexion</button>
     </div>
 
     <!-- ÉCRAN 3 : Solde -->
@@ -201,7 +206,7 @@
         <h2 id="balanceAmount">0 €</h2>
         <p>Solde disponible</p>
       </div>
-      <button class="secondary" onclick="app.backToMenu()">← Retour au menu</button>
+      <button class="secondary" onclick="backToMenu()">← Retour au menu</button>
     </div>
 
     <!-- ÉCRAN 4 : Retrait -->
@@ -213,8 +218,8 @@
       </div>
       <div id="withdrawError" class="error"></div>
       <div id="withdrawSuccess" class="success"></div>
-      <button onclick="app.withdraw()">Confirmer le retrait</button>
-      <button class="secondary" onclick="app.backToMenu()">← Retour au menu</button>
+      <button onclick="withdraw()">Confirmer le retrait</button>
+      <button class="secondary" onclick="backToMenu()">← Retour au menu</button>
     </div>
 
     <!-- ÉCRAN 5 : Dépôt -->
@@ -226,15 +231,15 @@
       </div>
       <div id="depositError" class="error"></div>
       <div id="depositSuccess" class="success"></div>
-      <button onclick="app.deposit()">Confirmer le dépôt</button>
-      <button class="secondary" onclick="app.backToMenu()">← Retour au menu</button>
+      <button onclick="deposit()">Confirmer le dépôt</button>
+      <button class="secondary" onclick="backToMenu()">← Retour au menu</button>
     </div>
 
     <!-- ÉCRAN 6 : Historique -->
     <div id="historyScreen" class="screen">
       <h2>📋 Historique</h2>
       <div id="historyList" class="history-list"></div>
-      <button class="secondary" onclick="app.backToMenu()">← Retour au menu</button>
+      <button class="secondary" onclick="backToMenu()">← Retour au menu</button>
     </div>
 
     <!-- ÉCRAN 7 : Connexion Opérateur -->
@@ -245,35 +250,39 @@
         <input type="password" id="operatorCode" maxlength="6" placeholder="******">
       </div>
       <div id="operatorLoginError" class="error"></div>
-      <button onclick="app.operatorLogin()">Se connecter</button>
-      <button class="secondary" onclick="app.showScreen('loginScreen')">← Retour</button>
+      <button onclick="operatorLogin()">Se connecter</button>
+      <button class="secondary" onclick="showScreen('loginScreen')">← Retour</button>
     </div>
 
     <!-- ÉCRAN 8 : Menu Opérateur -->
     <div id="operatorMenuScreen" class="screen">
       <h2>🔧 Menu Opérateur</h2>
       <p style="text-align:center; margin-bottom:20px; color:#6b7280;">Bienvenue Opérateur</p>
-      <button class="menu-item" onclick="app.showBlockedCards()">
-        <span class="menu-icon">🔒</span> Cartes avalées
+      <button class="menu-item" onclick="showBlockedCards()">
+        <span class="menu-icon">🔒</span>
+        <span>Cartes avalées</span>
       </button>
-      <button class="menu-item" onclick="app.showCollectDeposits()">
-        <span class="menu-icon">💰</span> Collecter dépôts
+      <button class="menu-item" onclick="showCollectDeposits()">
+        <span class="menu-icon">💰</span>
+        <span>Collecter dépôts</span>
       </button>
-      <button class="menu-item" onclick="app.showRefillATM()">
-        <span class="menu-icon">🏧</span> Recharger DAB
+      <button class="menu-item" onclick="showRefillATM()">
+        <span class="menu-icon">🏧</span>
+        <span>Recharger DAB</span>
       </button>
-      <button class="menu-item" onclick="app.showStatistics()">
-        <span class="menu-icon">📊</span> Statistiques
+      <button class="menu-item" onclick="showStatistics()">
+        <span class="menu-icon">📊</span>
+        <span>Statistiques</span>
       </button>
-      <button class="secondary" onclick="app.operatorLogout()">Déconnexion</button>
+      <button class="secondary" onclick="operatorLogout()">Déconnexion</button>
     </div>
 
     <!-- ÉCRAN 9 : Cartes avalées -->
     <div id="blockedCardsScreen" class="screen">
       <h2>🔒 Cartes avalées</h2>
       <div id="blockedCardsList" style="margin:20px 0;"></div>
-      <button onclick="app.releaseAllCards()">🔓 Libérer toutes les cartes</button>
-      <button class="secondary" onclick="app.showScreen('operatorMenuScreen')">← Retour</button>
+      <button onclick="releaseAllCards()">🔓 Libérer toutes les cartes</button>
+      <button class="secondary" onclick="showScreen('operatorMenuScreen')">← Retour</button>
     </div>
 
     <!-- ÉCRAN 10 : Collecter dépôts -->
@@ -283,8 +292,8 @@
         <h2><span id="totalDeposits">0 €</span></h2>
         <p>Total à collecter</p>
       </div>
-      <button onclick="app.collectDeposits()">✅ Marquer comme collecté</button>
-      <button class="secondary" onclick="app.showScreen('operatorMenuScreen')">← Retour</button>
+      <button onclick="collectDeposits()">✅ Marquer comme collecté</button>
+      <button class="secondary" onclick="showScreen('operatorMenuScreen')">← Retour</button>
     </div>
 
     <!-- ÉCRAN 11 : Recharger DAB -->
@@ -295,326 +304,304 @@
         <input type="number" id="refillAmount" placeholder="Ex: 5000" step="100">
       </div>
       <div id="refillMessage" class="success"></div>
-      <button onclick="app.refillATM()">💰 Recharger la machine</button>
-      <button class="secondary" onclick="app.showScreen('operatorMenuScreen')">← Retour</button>
+      <button onclick="refillATM()">💰 Recharger la machine</button>
+      <button class="secondary" onclick="showScreen('operatorMenuScreen')">← Retour</button>
     </div>
 
   </div>
 
 <script>
-// Application DAB - Architecture améliorée
-const app = {
-  // Données
-  validCards: {
-    '1234567890123456': { pin: '6453', name: 'M. Dupont', balance: 2500, type: 'Banque' },
-    '9876543210987654': { pin: '5628', name: 'Mme Martin', balance: 1750, type: 'Visa' }
-  },
-  
-  // État de l'application
-  currentUser: null,
-  currentOperator: null,
-  operationHistory: [],
-  loginAttempts: {},
-  blockedCards: {},
-  totalDepositsToday: 0,
-  dailyTransactions: 0,
-  operatorCode: '539757',
-
-  // Navigation
-  showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const screen = document.getElementById(screenId);
-    if (screen) {
-      screen.classList.add('active');
-      this.hideMessages();
-    } else {
-      console.error('Écran introuvable:', screenId);
-    }
-  },
-
-  hideMessages() {
-    document.querySelectorAll('.error, .success').forEach(el => {
-      el.classList.remove('show');
-      el.textContent = '';
-    });
-  },
-
-  showError(id, message) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.textContent = message;
-      el.classList.add('show');
-    }
-  },
-
-  showSuccess(id, message) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.textContent = message;
-      el.classList.add('show');
-    }
-  },
-
-  // Authentification Client
-  login() {
-    const cardNumber = document.getElementById('cardNumber').value.trim();
-    const pin = document.getElementById('pin').value.trim();
-
-    if (this.blockedCards[cardNumber]) {
-      this.showError('loginError', 'Carte avalée. Contactez le service client.');
-      return;
-    }
-
-    if (this.validCards[cardNumber] && this.validCards[cardNumber].pin === pin) {
-      this.loginAttempts[cardNumber] = 0;
-      this.currentUser = this.validCards[cardNumber];
-      this.operationHistory = [];
-      document.getElementById('userName').textContent = this.currentUser.name;
-      this.updateBalanceDisplay();
-      this.showScreen('menuScreen');
-    } else {
-      this.loginAttempts[cardNumber] = (this.loginAttempts[cardNumber] || 0) + 1;
-      if (this.loginAttempts[cardNumber] >= 3) {
-        this.blockedCards[cardNumber] = true;
-        this.showError('loginError', '❌ Carte avalée après 3 tentatives.');
-      } else {
-        this.showError('loginError', `❌ Identifiants incorrects (${this.loginAttempts[cardNumber]}/3)`);
-      }
-    }
-  },
-
-  logout() {
-    this.currentUser = null;
-    this.operationHistory = [];
-    document.getElementById('cardNumber').value = '';
-    document.getElementById('pin').value = '';
-    this.showScreen('loginScreen');
-  },
-
-  // Opérations bancaires
-  updateBalanceDisplay() {
-    document.getElementById('balanceAmount').textContent = this.currentUser.balance + ' €';
-  },
-
-  showBalance() {
-    this.addToHistory('Consultation', 0);
-    this.updateBalanceDisplay();
-    this.showScreen('balanceScreen');
-  },
-
-  showWithdraw() {
-    document.getElementById('withdrawAmount').value = '';
-    this.showScreen('withdrawScreen');
-  },
-
-  withdraw() {
-    this.hideMessages();
-    const amount = parseInt(document.getElementById('withdrawAmount').value, 10);
-    
-    if (!amount || amount <= 0) {
-      this.showError('withdrawError', 'Montant invalide');
-      return;
-    }
-    if (amount < 10) {
-      this.showError('withdrawError', 'Minimum: 10€');
-      return;
-    }
-    if (amount > 500) {
-      this.showError('withdrawError', 'Maximum: 500€');
-      return;
-    }
-    if (amount % 10 !== 0) {
-      this.showError('withdrawError', 'Multiples de 10€ uniquement');
-      return;
-    }
-    if (amount > this.currentUser.balance) {
-      this.showError('withdrawError', 'Solde insuffisant');
-      return;
-    }
-
-    this.currentUser.balance -= amount;
-    this.dailyTransactions++;
-    this.addToHistory('Retrait', amount);
-    this.updateBalanceDisplay();
-    this.showSuccess('withdrawSuccess', `✅ Retrait de ${amount}€ effectué`);
-    document.getElementById('withdrawAmount').value = '';
-  },
-
-  showDeposit() {
-    document.getElementById('depositAmount').value = '';
-    this.showScreen('depositScreen');
-  },
-
-  deposit() {
-    this.hideMessages();
-    const amount = parseInt(document.getElementById('depositAmount').value, 10);
-    
-    if (!amount || amount <= 0) {
-      this.showError('depositError', 'Montant invalide');
-      return;
-    }
-    if (amount < 10) {
-      this.showError('depositError', 'Minimum: 10€');
-      return;
-    }
-    if (amount % 10 !== 0) {
-      this.showError('depositError', 'Multiples de 10€ uniquement');
-      return;
-    }
-
-    this.currentUser.balance += amount;
-    this.totalDepositsToday += amount;
-    this.dailyTransactions++;
-    this.addToHistory('Dépôt', amount);
-    this.updateBalanceDisplay();
-    this.showSuccess('depositSuccess', `✅ Dépôt de ${amount}€ effectué`);
-    document.getElementById('depositAmount').value = '';
-  },
-
-  // Historique
-  addToHistory(type, amount) {
-    const now = new Date();
-    this.operationHistory.unshift({
-      type: type,
-      amount: amount,
-      date: now.toLocaleDateString('fr-FR'),
-      time: now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-    });
-  },
-
-  showHistory() {
-    const listEl = document.getElementById('historyList');
-    
-    if (this.operationHistory.length === 0) {
-      listEl.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:40px;">Aucune opération effectuée</p>';
-    } else {
-      let html = '';
-      this.operationHistory.forEach(op => {
-        const colors = {
-          'Dépôt': '#10b981',
-          'Retrait': '#ef4444',
-          'Consultation': '#6b7280'
-        };
-        const color = colors[op.type] || '#6b7280';
-        
-        html += `
-          <div class="history-item" style="border-left-color:${color}">
-            <div>
-              <strong style="color:${color}">${op.type}</strong><br>
-              <small style="color:#9ca3af">${op.date} à ${op.time}</small>
-            </div>
-            <div style="font-size:1.2em;font-weight:bold;color:${color}">
-              ${op.amount > 0 ? op.amount + ' €' : '—'}
-            </div>
-          </div>
-        `;
-      });
-      listEl.innerHTML = html;
-    }
-    
-    this.showScreen('historyScreen');
-  },
-
-  backToMenu() {
-    this.showScreen('menuScreen');
-  },
-
-  // Opérateur
-  showOperatorLogin() {
-    document.getElementById('operatorCode').value = '';
-    this.showScreen('operatorLoginScreen');
-  },
-
-  operatorLogin() {
-    const code = document.getElementById('operatorCode').value.trim();
-    if (code === this.operatorCode) {
-      this.currentOperator = { name: 'Opérateur' };
-      this.showScreen('operatorMenuScreen');
-    } else {
-      this.showError('operatorLoginError', 'Code incorrect');
-    }
-  },
-
-  operatorLogout() {
-    this.currentOperator = null;
-    this.showScreen('loginScreen');
-  },
-
-  showBlockedCards() {
-    const list = document.getElementById('blockedCardsList');
-    const blocked = Object.keys(this.blockedCards);
-    
-    if (blocked.length === 0) {
-      list.innerHTML = '<p style="text-align:center;color:#10b981;padding:20px">✅ Aucune carte bloquée</p>';
-    } else {
-      list.innerHTML = '<p style="margin-bottom:10px;font-weight:600">⚠️ Cartes bloquées:</p><ul style="list-style:none;padding:0">' +
-        blocked.map(c => `<li style="background:#fee2e2;padding:10px;margin:5px 0;border-radius:5px;font-family:monospace">${c}</li>`).join('') +
-        '</ul>';
-    }
-    this.showScreen('blockedCardsScreen');
-  },
-
-  releaseAllCards() {
-    this.blockedCards = {};
-    this.loginAttempts = {};
-    alert('✅ Toutes les cartes ont été libérées');
-    this.showBlockedCards();
-  },
-
-  showCollectDeposits() {
-    document.getElementById('totalDeposits').textContent = this.totalDepositsToday + ' €';
-    this.showScreen('collectScreen');
-  },
-
-  collectDeposits() {
-    alert(`💰 ${this.totalDepositsToday}€ collectés avec succès`);
-    this.totalDepositsToday = 0;
-    document.getElementById('totalDeposits').textContent = '0 €';
-  },
-
-  showRefillATM() {
-    document.getElementById('refillAmount').value = '';
-    document.getElementById('refillMessage').textContent = '';
-    this.showScreen('refillScreen');
-  },
-
-  refillATM() {
-    const amount = parseInt(document.getElementById('refillAmount').value);
-    if (amount && amount > 0) {
-      this.showSuccess('refillMessage', `✅ Machine rechargée avec ${amount}€`);
-    } else {
-      this.showError('refillMessage', '❌ Montant invalide');
-    }
-  },
-
-  showStatistics() {
-    const stats = `📊 STATISTIQUES DAB\n\n` +
-      `• Cartes bloquées: ${Object.keys(this.blockedCards).length}\n` +
-      `• Dépôts du jour: ${this.totalDepositsToday}€\n` +
-      `• Transactions: ${this.dailyTransactions}\n` +
-      `• Tentatives connexion: ${Object.keys(this.loginAttempts).length}`;
-    alert(stats);
-  }
+// Données
+const validCards = {
+  '1234567890123456': { secret: '6453', name: 'M. Dupont', balance: 2500, type: 'Banque' },
+  '9876543210987654': { secret: '5628', name: 'Mme Martin', balance: 1750, type: 'Visa' }
 };
+
+// Variables globales
+let currentUser = null;
+let currentOperator = null;
+let operationHistory = [];
+let loginAttempts = {};
+let blockedCards = {};
+let totalDepositsToday = 0;
+let dailyTransactions = 0;
+const operatorCode = '539757';
+
+// Navigation
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  hideMessages();
+}
+
+function hideMessages() {
+  document.querySelectorAll('.error, .success').forEach(el => {
+    el.classList.remove('show');
+    el.textContent = '';
+  });
+}
+
+function showError(id, message) {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.classList.add('show');
+}
+
+function showSuccess(id, message) {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.classList.add('show');
+}
+
+// Authentification Client
+function login() {
+  const cardNumber = document.getElementById('cardNumber').value.trim();
+  const secret = document.getElementById('secret').value.trim();
+
+  if (blockedCards[cardNumber]) {
+    showError('loginError', 'Carte avalée. Contactez le service client.');
+    return;
+  }
+
+  if (validCards[cardNumber] && validCards[cardNumber].secret === secret) {
+    loginAttempts[cardNumber] = 0;
+    currentUser = validCards[cardNumber];
+    operationHistory = [];
+    document.getElementById('userName').textContent = currentUser.name;
+    updateBalanceDisplay();
+    showScreen('menuScreen');
+  } else {
+    loginAttempts[cardNumber] = (loginAttempts[cardNumber] || 0) + 1;
+    if (loginAttempts[cardNumber] >= 3) {
+      blockedCards[cardNumber] = true;
+      showError('loginError', 'Carte avalée après 3 tentatives.');
+    } else {
+      showError('loginError', `Identifiants incorrects (${loginAttempts[cardNumber]}/3)`);
+    }
+  }
+}
+
+function logout() {
+  currentUser = null;
+  operationHistory = [];
+  document.getElementById('cardNumber').value = '';
+  document.getElementById('secret').value = '';
+  showScreen('loginScreen');
+}
+
+// Opérations bancaires
+function updateBalanceDisplay() {
+  document.getElementById('balanceAmount').textContent = currentUser.balance + ' €';
+}
+
+function showBalance() {
+  addToHistory('Consultation', 0);
+  updateBalanceDisplay();
+  showScreen('balanceScreen');
+}
+
+function showWithdraw() {
+  document.getElementById('withdrawAmount').value = '';
+  showScreen('withdrawScreen');
+}
+
+function withdraw() {
+  hideMessages();
+  const amount = parseInt(document.getElementById('withdrawAmount').value, 10);
+  
+  if (!amount || amount <= 0) {
+    showError('withdrawError', 'Montant invalide');
+    return;
+  }
+  if (amount < 10) {
+    showError('withdrawError', 'Minimum: 10€');
+    return;
+  }
+  if (amount > 500) {
+    showError('withdrawError', 'Maximum: 500€');
+    return;
+  }
+  if (amount % 10 !== 0) {
+    showError('withdrawError', 'Multiples de 10€ uniquement');
+    return;
+  }
+  if (amount > currentUser.balance) {
+    showError('withdrawError', 'Solde insuffisant');
+    return;
+  }
+
+  currentUser.balance -= amount;
+  dailyTransactions++;
+  addToHistory('Retrait', amount);
+  updateBalanceDisplay();
+  showSuccess('withdrawSuccess', `Retrait de ${amount}€ effectué`);
+  document.getElementById('withdrawAmount').value = '';
+}
+
+function showDeposit() {
+  document.getElementById('depositAmount').value = '';
+  showScreen('depositScreen');
+}
+
+function deposit() {
+  hideMessages();
+  const amount = parseInt(document.getElementById('depositAmount').value, 10);
+  
+  if (!amount || amount <= 0) {
+    showError('depositError', 'Montant invalide');
+    return;
+  }
+  if (amount < 10) {
+    showError('depositError', 'Minimum: 10€');
+    return;
+  }
+  if (amount % 10 !== 0) {
+    showError('depositError', 'Multiples de 10€ uniquement');
+    return;
+  }
+
+  currentUser.balance += amount;
+  totalDepositsToday += amount;
+  dailyTransactions++;
+  addToHistory('Dépôt', amount);
+  updateBalanceDisplay();
+  showSuccess('depositSuccess', `Dépôt de ${amount}€ effectué`);
+  document.getElementById('depositAmount').value = '';
+}
+
+// Historique
+function addToHistory(type, amount) {
+  const now = new Date();
+  operationHistory.unshift({
+    type: type,
+    amount: amount,
+    date: now.toLocaleDateString('fr-FR'),
+    time: now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+  });
+}
+
+function showHistory() {
+  const listEl = document.getElementById('historyList');
+  
+  if (operationHistory.length === 0) {
+    listEl.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:40px;">Aucune opération effectuée</p>';
+  } else {
+    let html = '';
+    operationHistory.forEach(op => {
+      const colors = {
+        'Dépôt': '#10b981',
+        'Retrait': '#ef4444',
+        'Consultation': '#6b7280'
+      };
+      const color = colors[op.type] || '#6b7280';
+      
+      html += `
+        <div class="history-item" style="border-left-color:${color}">
+          <div>
+            <strong style="color:${color}">${op.type}</strong><br>
+            <small style="color:#9ca3af">${op.date} à ${op.time}</small>
+          </div>
+          <div style="font-size:1.2em;font-weight:bold;color:${color}">
+            ${op.amount > 0 ? op.amount + ' €' : '—'}
+          </div>
+        </div>
+      `;
+    });
+    listEl.innerHTML = html;
+  }
+  
+  showScreen('historyScreen');
+}
+
+function backToMenu() {
+  showScreen('menuScreen');
+}
+
+// Opérateur
+function showOperatorLogin() {
+  document.getElementById('operatorCode').value = '';
+  showScreen('operatorLoginScreen');
+}
+
+function operatorLogin() {
+  const code = document.getElementById('operatorCode').value.trim();
+  if (code === operatorCode) {
+    currentOperator = { name: 'Opérateur' };
+    showScreen('operatorMenuScreen');
+  } else {
+    showError('operatorLoginError', 'Code incorrect');
+  }
+}
+
+function operatorLogout() {
+  currentOperator = null;
+  showScreen('loginScreen');
+}
+
+function showBlockedCards() {
+  const list = document.getElementById('blockedCardsList');
+  const blocked = Object.keys(blockedCards);
+  
+  if (blocked.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:#10b981;padding:20px">Aucune carte bloquée</p>';
+  } else {
+    list.innerHTML = '<p style="margin-bottom:10px;font-weight:600">Cartes bloquées:</p><ul style="list-style:none;padding:0">' +
+      blocked.map(c => `<li style="background:#fee2e2;padding:10px;margin:5px 0;border-radius:5px;font-family:monospace">${c}</li>`).join('') +
+      '</ul>';
+  }
+  showScreen('blockedCardsScreen');
+}
+
+function releaseAllCards() {
+  blockedCards = {};
+  loginAttempts = {};
+  alert('Toutes les cartes ont été libérées');
+  showBlockedCards();
+}
+
+function showCollectDeposits() {
+  document.getElementById('totalDeposits').textContent = totalDepositsToday + ' €';
+  showScreen('collectScreen');
+}
+
+function collectDeposits() {
+  alert(`${totalDepositsToday}€ collectés avec succès`);
+  totalDepositsToday = 0;
+  document.getElementById('totalDeposits').textContent = '0 €';
+}
+
+function showRefillATM() {
+  document.getElementById('refillAmount').value = '';
+  document.getElementById('refillMessage').textContent = '';
+  showScreen('refillScreen');
+}
+
+function refillATM() {
+  const amount = parseInt(document.getElementById('refillAmount').value);
+  if (amount && amount > 0) {
+    showSuccess('refillMessage', `Machine rechargée avec ${amount}€`);
+  } else {
+    showError('refillMessage', 'Montant invalide');
+  }
+}
+
+function showStatistics() {
+  const stats = `STATISTIQUES DAB\n\n` +
+    `Cartes bloquées: ${Object.keys(blockedCards).length}\n` +
+    `Dépôts du jour: ${totalDepositsToday}€\n` +
+    `Transactions: ${dailyTransactions}\n` +
+    `Tentatives connexion: ${Object.keys(loginAttempts).length}`;
+  alert(stats);
+}
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
-  // Limitation saisies numériques
   document.getElementById('cardNumber').addEventListener('input', e => {
     e.target.value = e.target.value.replace(/\D/g, '');
   });
-  document.getElementById('pin').addEventListener('input', e => {
-    e.target.value = e.target.value.replace(/\D/g, '');
+  document.getElementById('secret').addEventListener('keypress', e => {
+    if (e.key === 'Enter') login();
   });
-  
-  // Touche Entrée sur login
-  document.getElementById('pin').addEventListener('keypress', e => {
-    if (e.key === 'Enter') app.login();
-  });
-  
-  console.log('✅ DAB initialisé - Comptes test:');
-  console.log('Client: 1234567890123456 / PIN: 6453');
-  console.log('Opérateur: 539757');
 });
 </script>
 </body>
